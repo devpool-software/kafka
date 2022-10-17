@@ -65,13 +65,16 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddKafka(option =>
         {
             option.Subscribe<TestEvent1>(2);
-            option.Subscribe<TestEvent2>(3);
+            option.Subscribe<TestEvent2>();
         });
     })
     .Build();
 
 host.Run();
 ````
+```option.Subscribe<TestEvent1>(3);``` 3 thread subscribe one group-id
+
+```option.Subscribe<TestEvent2>();``` default 1 thread subscribe one group-id
 
 Configuration
 
