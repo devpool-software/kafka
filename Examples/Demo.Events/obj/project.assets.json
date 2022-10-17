@@ -739,7 +739,7 @@
           "buildTransitive/netcoreapp3.1/_._": {}
         }
       },
-      "Devpool.Kafka/1.0.0": {
+      "Devpool.Kafka/0.0.1": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
@@ -1590,7 +1590,7 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "Devpool.Kafka/1.0.0": {
+    "Devpool.Kafka/0.0.1": {
       "type": "project",
       "path": "../../Devpool.Kafka/Devpool.Kafka.csproj",
       "msbuildProject": "../../Devpool.Kafka/Devpool.Kafka.csproj"
@@ -1598,7 +1598,7 @@
   },
   "projectFileDependencyGroups": {
     "net6.0": [
-      "Devpool.Kafka >= 1.0.0"
+      "Devpool.Kafka >= 0.0.1"
     ]
   },
   "packageFolders": {

@@ -743,7 +743,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
-          "Devpool.Kafka": "1.0.0"
+          "Devpool.Kafka": "0.0.1"
         },
         "compile": {
           "bin/placeholder/Demo.Events.dll": {}
@@ -752,7 +752,7 @@
           "bin/placeholder/Demo.Events.dll": {}
         }
       },
-      "Devpool.Kafka/1.0.0": {
+      "Devpool.Kafka/0.0.1": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
@@ -1608,7 +1608,7 @@
       "path": "../Demo.Events/Demo.Events.csproj",
       "msbuildProject": "../Demo.Events/Demo.Events.csproj"
     },
-    "Devpool.Kafka/1.0.0": {
+    "Devpool.Kafka/0.0.1": {
       "type": "project",
       "path": "../../Devpool.Kafka/Devpool.Kafka.csproj",
       "msbuildProject": "../../Devpool.Kafka/Devpool.Kafka.csproj"
@@ -1617,7 +1617,7 @@
   "projectFileDependencyGroups": {
     "net6.0": [
       "Demo.Events >= 1.0.0",
-      "Devpool.Kafka >= 1.0.0"
+      "Devpool.Kafka >= 0.0.1"
     ]
   },
   "packageFolders": {

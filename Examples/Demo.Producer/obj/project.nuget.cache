@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "/sgwOHWxbC4SB5W+04oAfYD/j+mh0Htfl73OZu0XCqjxPI09eAdVdqmT0szZC/Z38fRFI+oZXukZS/SAN5JrRQ==",
+  "dgSpecHash": "mPuiP1jfwx8FMIp4kwvVMO2h1M2LIyDIZcjZvPxG6mIebeiXvPeo1xsfmTTng4WdtePM0qbJz3X7JlrIe7KgDA==",
   "success": true,
   "projectFilePath": "C:\\Users\\stan\\Code\\GitHub\\kafka\\Examples\\Demo.Producer\\Demo.Producer.csproj",
   "expectedPackageFiles": [
