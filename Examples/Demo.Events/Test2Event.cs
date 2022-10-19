@@ -2,9 +2,9 @@
 
 namespace Demo.Events;
 
-public record TestEvent1:IEvent
+public record Test2Event:IEvent
 {
-    public TestEvent1(string message)
+    public Test2Event(string message)
     {
         Message = message;
     }

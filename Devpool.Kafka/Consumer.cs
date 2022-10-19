@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Text;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using Confluent.Kafka;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,7 +14,7 @@ public class Consumer<TEvent> : BackgroundService where TEvent: IEvent
     private readonly ILogger<Consumer<TEvent>> _logger;
     private readonly IServiceProvider _serviceProvider;
     private readonly ConsumerConfig _config;
-    private int _threadCount = 0;
+    private readonly int _threadCount = 0;
 
     public Consumer(
         ILogger<Consumer<TEvent>> logger, 
@@ -23,7 +24,6 @@ public class Consumer<TEvent> : BackgroundService where TEvent: IEvent
         _logger = logger;
         _serviceProvider = serviceProvider;
         _config = options.Value.ConsumerConfig;
-        _logger.LogInformation("worker-1");
         _threadCount = options.Value.EventTypes.Single(x => x.Type == typeof(TEvent)).ThreadCount;
     }
 
@@ -58,13 +58,16 @@ public class Consumer<TEvent> : BackgroundService where TEvent: IEvent
                 while (true)
                 {
                     var result = consumer.Consume(stoppingToken);
-                    _logger.LogDebug($"Consumer<{typeof(TEvent).Name}>={number} start consume event");
+                    var correlationId = Encoding.UTF8.GetString(result.Message.Headers.First(x=>x.Key == "CorrelationId").GetValueBytes());
+                    _logger.LogInformation($"Consumer<{typeof(TEvent).Name}>={number} start consume event, CorrelationId={correlationId}, Message={result.Message.Value}");
                     var @event = JsonSerializer.Deserialize<TEvent>(result.Message.Value);
                     var handlerType = typeof(IEventHandler<>).MakeGenericType(typeof(TEvent));
                     await using var scope = _serviceProvider.CreateAsyncScope();
-                    dynamic handler = scope.ServiceProvider.GetRequiredService(handlerType);
+                     var context = scope.ServiceProvider.GetRequiredService<KafkaContext>();
+                     context.CorrelationId = correlationId;
+                     dynamic handler = scope.ServiceProvider.GetRequiredService(handlerType);
                     await handler.HandleAsync((dynamic)@event!, stoppingToken);
-                    _logger.LogDebug($"Consumer<{typeof(TEvent).Name}>={number} finish consume event");
+                    _logger.LogInformation($"Consumer<{typeof(TEvent).Name}>={number} finish consume event");
                 }
             }
             catch (Exception)
@@ -96,12 +99,12 @@ public class Consumer<TEvent> : BackgroundService where TEvent: IEvent
 
     private  void LogHandler(IConsumer<Ignore, string> consumer, LogMessage message)
     {
-        _logger.LogDebug($"Consumer<{typeof(TEvent).Name}> Message="+message.Message);
+        _logger.LogInformation($"Consumer<{typeof(TEvent).Name}> Message="+message.Message);
     }
 
     private  void ErrorHandler(IConsumer<Ignore, string> consumer, Error error)
     {
-        _logger.LogDebug($"Consumer<{typeof(TEvent).Name}> Error="+error.Reason);
+        _logger.LogError($"Consumer<{typeof(TEvent).Name}> Error="+error.Reason);
     }
     
 }

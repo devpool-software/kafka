@@ -8,8 +8,8 @@ var host = Host.CreateDefaultBuilder(args)
     {
         services.AddKafka(option =>
         {
-            option.Subscribe<TestEvent1>(2);
-            option.Subscribe<TestEvent2>(3);
+            option.Subscribe<Test1Event>(3);
+            option.Subscribe<Test2Event>(6);
         });
     })
     .Build();

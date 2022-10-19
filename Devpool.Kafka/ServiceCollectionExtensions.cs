@@ -13,7 +13,7 @@ public static class ServiceCollectionExtensions
     {
         var configuration = services.BuildServiceProvider().GetRequiredService<IConfiguration>();
         services.Configure<KafkaOption>(configuration.GetSection("Kafka"));
-        services.AddTransient<IProducer, Producer>();
+        AddProducerAndContext(services);
     }
 
     public static void AddKafka(this IServiceCollection services, Action<KafkaOption> action)
@@ -26,7 +26,7 @@ public static class ServiceCollectionExtensions
             .BuildServiceProvider()
             .GetRequiredService<IOptions<KafkaOption>>()
             .Value;
-        
+
         var eventHandlerTypes = GetEventHandlerTypes();
 
         foreach (var eventType in options.EventTypes
@@ -43,6 +43,14 @@ public static class ServiceCollectionExtensions
         {
             services.TryAddEnumerable(ServiceDescriptor.Singleton(typeof(IHostedService), consumer));
         }
+
+        AddProducerAndContext(services);
+    }
+
+    private static void AddProducerAndContext(IServiceCollection services)
+    {
+        services.AddScoped<IProducer, Producer>();   
+        services.AddScoped<KafkaContext>();
     }
 
     private static List<Type> GetEventHandlerTypes()

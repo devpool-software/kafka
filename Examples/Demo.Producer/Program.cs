@@ -16,13 +16,13 @@ var host = Host.CreateDefaultBuilder(args)
 var producer = host.Services.GetRequiredService<IProducer>();
 
 //Send one event
-await producer.ProduceAsync(new TestEvent1("Test message"));
+await producer.ProduceAsync(new Test2Event("Test message"));
 
-var list = new List<TestEvent1>();
-for (var i = 0; i < 1000; i++)
-{
-    list.Add(new TestEvent1(i.ToString()));
-}
-
-//Send many events
-await producer.ProduceRangeAsync(list);
+// var list = new List<Test1Event>();
+// for (var i = 0; i < 2; i++)
+// {
+//     list.Add(new Test1Event(i.ToString()));
+// }
+//
+// //Send many events
+// await producer.ProduceRangeAsync(list);
